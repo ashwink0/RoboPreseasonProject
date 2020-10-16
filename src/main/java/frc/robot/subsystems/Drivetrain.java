@@ -1,10 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
-
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import frc.robot.RobotMap;
 import harkerrobolib.wrappers.HSTalon;
 
@@ -20,13 +18,13 @@ public class Drivetrain extends SubsystemBase {
     private static boolean leftSensorPhase = false;
     private static boolean rightSensorPhase = false;
 
-    private static final double RIGHT_P = 1;
-    private static final double RIGHT_I = 1;
-    private static final double RIGHT_D = 1;
+    private static final double RIGHT_P = 0;
+    private static final double RIGHT_I = 0;
+    private static final double RIGHT_D = 0;
 
-    private static final double LEFT_P = 1;
-    private static final double LEFT_I = 1;
-    private static final double LEFT_D = 1;
+    private static final double LEFT_P = 0;
+    private static final double LEFT_I = 0;
+    private static final double LEFT_D = 0;
 
 
     private HSTalon leftMaster;
