@@ -15,8 +15,8 @@ public class Drivetrain extends SubsystemBase {
     private static final boolean RIGHT_MASTER_INVERTED = false;
     private static final boolean RIGHT_FOLLOWER_INVERTED = false;
 
-    private static boolean leftSensorPhase = false;
-    private static boolean rightSensorPhase = false;
+    private static final boolean LEFT_SENSOR_PHASE = false;
+    private static final boolean RIGHT_SENSOR_PHASE = false;
 
     private static final double RIGHT_P = 0;
     private static final double RIGHT_I = 0;
@@ -48,29 +48,13 @@ public class Drivetrain extends SubsystemBase {
         return drivetrain;
     }
 
-    public HSTalon getLeftMaster() {
-        return leftMaster;
-    }
-
-    public HSTalon getLeftFollower() {
-        return leftFollower;
-    }
-
-    public HSTalon getRightMaster() {
-        return rightMaster;
-    }
-
-    public HSTalon getRightFollower() {
-        return rightFollower;
-    }
-
     public void talonInit() {
         resetTalons();
         followMasters();
         invertTalons(LEFT_MASTER_INVERTED, LEFT_FOLLOWER_INVERTED, RIGHT_MASTER_INVERTED, RIGHT_FOLLOWER_INVERTED);
 
-        leftMaster.setSensorPhase(leftSensorPhase);
-        rightMaster.setSensorPhase(rightSensorPhase);
+        leftMaster.setSensorPhase(LEFT_SENSOR_PHASE);
+        rightMaster.setSensorPhase(RIGHT_SENSOR_PHASE);
     }
 
     private void resetTalons() {
@@ -114,4 +98,20 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.set(ControlMode.PercentOutput, y + x);
         rightMaster.set(ControlMode.PercentOutput, y - x);
     } 
+
+    public HSTalon getLeftMaster() {
+        return leftMaster;
+    }
+
+    public HSTalon getLeftFollower() {
+        return leftFollower;
+    }
+
+    public HSTalon getRightMaster() {
+        return rightMaster;
+    }
+
+    public HSTalon getRightFollower() {
+        return rightFollower;
+    }
 }
