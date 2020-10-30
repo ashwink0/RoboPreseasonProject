@@ -1,17 +1,20 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.OI;
 import frc.robot.subsystems.Drivetrain;
 import harkerrobolib.commands.IndefiniteCommand;
+import harkerrobolib.util.MathUtil;
 
-public class SetPercentOutput extends IndefiniteCommand{
+public class SetPercentOutput extends IndefiniteCommand {
 
-    SetPercentOutput(){
+    public SetPercentOutput() {
         addRequirements(Drivetrain.getInstance());
     }
-    
+
     @Override
-    public void execute(){
-        Drivetrain.getInstance().setPercentOutput(x, y);
+    public void execute() {
+        double x = MathUtil.mapJoystickOutput(OI.getInstance().getDriverGamepad().getLeftX(), OI.DEADBAND);
+        double y = MathUtil.mapJoystickOutput(OI.getInstance().getDriverGamepad().getLeftY(), OI.DEADBAND);
+        Drivetrain.getInstance().setPercentOutput(y, x);
     }
 }

@@ -94,9 +94,9 @@ public class Drivetrain extends SubsystemBase {
     }
 
 
-    public void setPercentOutput(double x, double y){
-        leftMaster.set(ControlMode.PercentOutput, y + x);
-        rightMaster.set(ControlMode.PercentOutput, y - x);
+    public void setPercentOutput(double speed, double turn){
+        leftMaster.set(ControlMode.PercentOutput, speed + turn);
+        rightMaster.set(ControlMode.PercentOutput, speed - turn);
     } 
 
     public HSTalon getLeftMaster() {
