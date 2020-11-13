@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import frc.robot.RobotMap;
+import frc.robot.commands.SetPercentOutput;
 import harkerrobolib.wrappers.HSTalon;
 
 public class Drivetrain extends SubsystemBase {
@@ -39,6 +40,8 @@ public class Drivetrain extends SubsystemBase {
         rightFollower = new HSTalon(RobotMap.DRIVE_IDS[3]);
 
         talonInit();
+
+        setDefaultCommand(new SetPercentOutput());
     }
 
     public static Drivetrain getInstance() {
