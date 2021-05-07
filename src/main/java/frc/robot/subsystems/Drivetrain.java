@@ -1,8 +1,12 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import frc.robot.RobotMap;
 import frc.robot.commands.SetPercentOutput;
 import harkerrobolib.wrappers.HSTalon;
@@ -27,17 +31,24 @@ public class Drivetrain extends SubsystemBase {
     private static final double LEFT_I = 0;
     private static final double LEFT_D = 0;
 
+    private static final double PEAK_CURRENT_LIMIT = 20;
+    private static final double CONTINUOUS_CURRENT_LIMIT = 15;
+
+    private static final double PEAK_TIME = 0.750;
+
+
+
 
     private HSTalon leftMaster;
-    private HSTalon leftFollower;
+    private VictorSPX leftFollower;
     private HSTalon rightMaster;
-    private HSTalon rightFollower;
+    private VictorSPX rightFollower;
 
     private Drivetrain() {
         leftMaster = new HSTalon(RobotMap.DRIVE_IDS[0]);
-        leftFollower = new HSTalon(RobotMap.DRIVE_IDS[1]);
+        leftFollower = new VictorSPX(RobotMap.DRIVE_IDS[1]);
         rightMaster = new HSTalon(RobotMap.DRIVE_IDS[2]);
-        rightFollower = new HSTalon(RobotMap.DRIVE_IDS[3]);
+        rightFollower = new VictorSPX(RobotMap.DRIVE_IDS[3]);
 
         talonInit();
 
@@ -56,6 +67,8 @@ public class Drivetrain extends SubsystemBase {
         followMasters();
         invertTalons(LEFT_MASTER_INVERTED, LEFT_FOLLOWER_INVERTED, RIGHT_MASTER_INVERTED, RIGHT_FOLLOWER_INVERTED);
 
+        applyCurrentLimits();
+
         leftMaster.setSensorPhase(LEFT_SENSOR_PHASE);
         rightMaster.setSensorPhase(RIGHT_SENSOR_PHASE);
     }
@@ -66,6 +79,11 @@ public class Drivetrain extends SubsystemBase {
         rightMaster.configFactoryDefault();
         rightFollower.configFactoryDefault();
     
+    }
+
+    public void applyCurrentLimits(){
+        leftMaster.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, CONTINUOUS_CURRENT_LIMIT, PEAK_CURRENT_LIMIT, PEAK_TIME));
+        rightMaster.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, CONTINUOUS_CURRENT_LIMIT, PEAK_CURRENT_LIMIT, PEAK_TIME));
     }
 
     private void followMasters() {
@@ -106,7 +124,7 @@ public class Drivetrain extends SubsystemBase {
         return leftMaster;
     }
 
-    public HSTalon getLeftFollower() {
+    public VictorSPX getLeftFollower() {
         return leftFollower;
     }
 
@@ -114,7 +132,7 @@ public class Drivetrain extends SubsystemBase {
         return rightMaster;
     }
 
-    public HSTalon getRightFollower() {
+    public VictorSPX getRightFollower() {
         return rightFollower;
     }
 }
